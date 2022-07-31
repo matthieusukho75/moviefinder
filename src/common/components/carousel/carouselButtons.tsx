@@ -1,8 +1,9 @@
 import { IconButton } from "@mui/material";
+import styles from "./carousel.module.css";
 
 export const PrevButton = ({ enabled, onClick }) => (
     <IconButton
-      className="embla__button embla__button--prev"
+      className={styles.embla__button__prev}
       onClick={onClick}
       disabled={!enabled}
     >
@@ -12,7 +13,7 @@ export const PrevButton = ({ enabled, onClick }) => (
   
   export const NextButton = ({ enabled, onClick }) => (
     <IconButton
-      className="embla__button embla__button--next"
+    className={styles.embla__button__next}
       onClick={onClick}
       disabled={!enabled}
     >
