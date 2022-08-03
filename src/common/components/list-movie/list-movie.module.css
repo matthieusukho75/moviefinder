@@ -1,0 +1,16 @@
+.grid_movie {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 50px;
+}
+
+.box_container {
+    padding-bottom: 50px;
+    margin: -12px auto 0;
+}
+
+@media (max-width: 740px) {
+    .box_container {
+        margin: 0 
+    }
+  }

@@ -3,6 +3,8 @@ import useEmblaCarousel from "embla-carousel-react";
 import styles from "./carousel.module.css";
 import { NextButton, PrevButton } from "./carouselButtons";
 import { CardMovie } from "../card-movie/card-movie";
+import { useMediaQuery } from "@mui/material";
+import {config} from "../../../../config/config"
 
 interface CarouselProps {
   data?: any;
@@ -13,52 +15,43 @@ export const Carousel: FC<CarouselProps> = ({ data }) => {
     align: "start",
   });
 
+  const smallScreen = useMediaQuery("(max-width: 1024px)");
+
+  const topRated = data.slice(0, 10);
+
   const scrollPrev = useCallback(() => embla && embla.scrollPrev(), [embla]);
   const scrollNext = useCallback(() => embla && embla.scrollNext(), [embla]);
 
   return (
     <div className={styles.container}>
-      <PrevButton enabled={null} onClick={null} />
+      {!smallScreen && (
+        <div className={styles.button_container}>
+          <PrevButton enabled={true} onClick={scrollPrev} />
+        </div>
+      )}
+
       <div className={styles.embla} ref={emblaRef}>
         <div className={styles.embla__container}>
-          <div className={styles.embla__slide}>
-            <CardMovie
-              img={"/images/film1.jpg"}
-              title={"Title"}
-              date={"2019"}
-            />
-          </div>
-          <div className={styles.embla__slide}>
-            <CardMovie
-              img={"/images/film2.jpg"}
-              title={"Title"}
-              date={"2019"}
-            />
-          </div>
-          <div className={styles.embla__slide}>
-            <CardMovie
-              img={"/images/film3.jpg"}
-              title={"Title"}
-              date={"2019"}
-            />
-          </div>
-          <div className={styles.embla__slide}>
-            <CardMovie
-              img={"/images/film5.jpg"}
-              title={"Title"}
-              date={"2019"}
-            />
-          </div>
-          <div className={styles.embla__slide}>
-            <CardMovie
-              img={"/images/film6.jpg"}
-              title={"Title"}
-              date={"2019"}
-            />
-          </div>
+          {topRated.map((movie, index) => {
+            const yearDate = movie.release_date.split('-')[0]
+            return (
+              <div key={index} className={styles.embla__slide}>
+                <CardMovie
+                  img={config.url_image + movie.poster_path}
+                  title={movie.title}
+                  date={yearDate}
+                  className={styles.img}
+                />
+              </div>
+            );
+          })}
         </div>
       </div>
-      <NextButton enabled={null} onClick={null} />
+      {!smallScreen && (
+        <div className={styles.button_container}>
+          <NextButton enabled={true} onClick={scrollNext} />
+        </div>
+      )}
     </div>
   );
 };
