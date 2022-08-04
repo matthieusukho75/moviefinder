@@ -28,6 +28,7 @@ const Home: FC<HomeProps> = ({ data, dataGenre }) => {
   const onPageChange = async (event, value, filter, typeFilter) => {
     setNumberPage(value);
     let url = null;
+    console.log(filter)
     //Je filtre ici les différents filtre et réitère l'appel par page
     if (filter === "genre")
       url = `${config.api_url}/discover/movie?api_key=${config.api_key}&page=${value}&with_genres=${typeFilter}`;
@@ -67,13 +68,12 @@ const Home: FC<HomeProps> = ({ data, dataGenre }) => {
     setWichFilter("year");
     setArgFilter(year);
     setDateValue(year);
-    console.log(year);
+    
     try {
       const res = await fetch(
         `${config.api_url}/discover/movie?api_key=${config.api_key}&page=${numberPage}&year=${year}`
       );
       const data = await res.json();
-      console.log(data);
       setMoviesToDisplay(data.results);
     } catch (e) {
       console.log(e);
@@ -103,7 +103,7 @@ const Home: FC<HomeProps> = ({ data, dataGenre }) => {
                 sortName={"Ordre alphabétique"}
                 dataToSort={sortAlpha}
                 numberPage={numberPage}
-                handleChangeId={null}
+                handleChangeId={(id) => onSelectIdGenre(id, numberPage)}
                 type={"alpha"}
               />
               <Grid sx={{ display: "flex" }}>

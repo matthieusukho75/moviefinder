@@ -38,6 +38,7 @@ export const CustomSelect: FC<SelectProps> = ({
 
   const handleChange = (event) => {
     setValue(event.target.value);
+    handleChangeId(event.target.value);
   };
 
   return (
