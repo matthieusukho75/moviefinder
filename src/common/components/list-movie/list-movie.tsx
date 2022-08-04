@@ -9,7 +9,6 @@ interface ListProps {
 }
 
 export const ListMovie: FC<ListProps> = ({ data }) => {
-  //console.log(data);
   return (
     <Box className={styles.box_container}>
       <Grid container justifyContent="center" flexDirection="row">

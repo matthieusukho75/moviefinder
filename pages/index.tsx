@@ -1,11 +1,10 @@
 import { Box, Grid, Typography, Pagination } from "@mui/material";
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useState } from "react";
 import Calendar from "../src/common/components/calendar/calendar";
 import Carousel from "../src/common/components/carousel/carousel";
 import { ListMovie } from "../src/common/components/list-movie/list-movie";
 import { SearchBar } from "../src/common/components/search-bar/search-bar";
 import { CustomSelect } from "../src/common/components/select/select";
-import { colors } from "../src/theme";
 import styles from "../styles/index.module.css";
 import { config } from "../config/config";
 

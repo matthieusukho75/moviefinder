@@ -1,7 +1,6 @@
 import "../styles/globals.css";
 import { ThemeProvider } from "@mui/material/styles";
 import {theme} from '../src/theme'
-import "react-datetime/css/react-datetime.css";
 
 function MyApp({ Component, pageProps }) {
   return (

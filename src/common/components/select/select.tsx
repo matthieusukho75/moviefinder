@@ -1,9 +1,6 @@
 import React, { FC } from "react";
-import OutlinedInput from "@mui/material/OutlinedInput";
 import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import { Typography, NativeSelect, TextField } from "@mui/material";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
+import { Typography} from "@mui/material";
 import styles from "./select.module.css";
 import { colors } from "../../../theme";
 import { InputAdornment } from "@mui/material";
@@ -38,18 +35,6 @@ export const CustomSelect: FC<SelectProps> = ({
   type
 }) => {
   const [value, setValue] = React.useState(0);
-
-  const handleAlphaChange = async () => {
-    try {
-      const res = await fetch(
-        `${config.api_url}/discover/movie?api_key=${config.api_key}&page=${numberPage}&sort_by=title.asc`
-      );
-      const data = await res.json();
-      console.log(data);
-    } catch (e) {
-      console.log(e);
-    }
-  };
 
   const handleChange = (event) => {
     setValue(event.target.value);
