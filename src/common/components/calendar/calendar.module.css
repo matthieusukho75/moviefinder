@@ -1,16 +1,6 @@
-.datePicker .rdtPicker {
+.datePicker {
    background-color: #253755;
    border: 0;
    padding: 0;
    border-radius: 12px;
-}
-
-.popper
- {
-    /* //padding: 11px 20px 6px 39px; */
-    color: #586E94;
-    border-radius: 12px;
-    background-color: transparent;
-    border: 1px solid  #586E94;
-    
 }

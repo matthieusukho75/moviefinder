@@ -8,10 +8,8 @@ export const SearchBar = () => {
         <FormControl variant="outlined">
             <OutlinedInput
                 id="outlined-adornment-weight"
-                //value={values.weight}
-                //onChange={handleChange('weight')}
                 endAdornment={
-                    <InputAdornment position="end">
+                    <InputAdornment position="end" sx={{marginRight: "14px"}}>
                         <img src={'/images/searchicon.svg'} alt="" />
                     </InputAdornment>
                 }

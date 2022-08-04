@@ -17,17 +17,31 @@ interface HomeProps {
 const Home: FC<HomeProps> = ({ data, dataGenre }) => {
   const [numberPage, setNumberPage] = useState<number>(1);
   const [moviesToDisplay, setMoviesToDisplay] = useState<any>(data.results);
+  const [argFilter, setArgFilter] = useState<any>(null); //Le type
+  const [whichFilter, setWichFilter] = useState<any>(null);
+  const [dateValue, setDateValue] = useState(null);
 
   const sortAlpha = [
     { id: 1, name: "A-Z" },
     { id: 2, name: "Z-A" },
   ];
 
-  const onPageChange = async (event, value) => {
+  const onPageChange = async (event, value, filter, typeFilter) => {
     setNumberPage(value);
+    let url = null;
+    //Je filtre ici les différents filtre et réitère l'appel par page
+    if (filter === "genre")
+      url = `${config.api_url}/discover/movie?api_key=${config.api_key}&page=${value}&with_genres=${typeFilter}`;
+    //Faire un else if ou switch case si plusieurs filtres
+    else {
+      url = `${config.api_url}/discover/movie?api_key=${config.api_key}&page=${value}&year=${typeFilter}`;
+    }
+
     try {
       const res = await fetch(
-        `${config.api_url}/movie/popular?api_key=${config.api_key}&page=${value}`
+        url
+          ? url
+          : `${config.api_url}/movie/popular?api_key=${config.api_key}&page=${value}`
       );
       const data = await res.json();
       setMoviesToDisplay(data.results);
@@ -36,7 +50,9 @@ const Home: FC<HomeProps> = ({ data, dataGenre }) => {
     }
   };
 
-  const onSelectIdGenre = async (id: number) => {
+  const onSelectIdGenre = async (id: number, numberPage) => {
+    setWichFilter("genre");
+    setArgFilter(id);
     try {
       const res = await fetch(
         `${config.api_url}/discover/movie?api_key=${config.api_key}&page=${numberPage}&with_genres=${id}`
@@ -48,7 +64,22 @@ const Home: FC<HomeProps> = ({ data, dataGenre }) => {
     }
   };
 
-  console.log(dataGenre);
+  const onSelectYear = async (year: any, numberPage) => {
+    setWichFilter("year");
+    setArgFilter(year);
+    setDateValue(year);
+    console.log(year);
+    try {
+      const res = await fetch(
+        `${config.api_url}/discover/movie?api_key=${config.api_key}&page=${numberPage}&year=${year}`
+      );
+      const data = await res.json();
+      console.log(data);
+      setMoviesToDisplay(data.results);
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   return (
     <Box className={styles.boxContainer}>
@@ -73,7 +104,8 @@ const Home: FC<HomeProps> = ({ data, dataGenre }) => {
                 sortName={"Ordre alphabétique"}
                 dataToSort={sortAlpha}
                 numberPage={numberPage}
-                handleChangeId={onSelectIdGenre}
+                handleChangeId={null}
+                type={"alpha"}
               />
               <Grid sx={{ display: "flex" }}>
                 <CustomSelect
@@ -81,9 +113,13 @@ const Home: FC<HomeProps> = ({ data, dataGenre }) => {
                   sortName={"Genre"}
                   dataToSort={dataGenre.genres}
                   numberPage={numberPage}
-                  handleChangeId={onSelectIdGenre}
+                  handleChangeId={(id) => onSelectIdGenre(id, numberPage)}
+                  type={"genre"}
                 />
-                <Calendar />
+                <Calendar
+                  handleChange={(year) => onSelectYear(year, numberPage)}
+                  dateValue={dateValue}
+                />
               </Grid>
             </Grid>
           </Grid>
@@ -96,7 +132,9 @@ const Home: FC<HomeProps> = ({ data, dataGenre }) => {
           count={10}
           shape="rounded"
           boundaryCount={10}
-          onChange={onPageChange}
+          onChange={(event, page) =>
+            onPageChange(event, page, whichFilter, argFilter)
+          }
           defaultPage={1}
         />
       </Grid>
