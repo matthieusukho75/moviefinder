@@ -4,6 +4,12 @@
     margin-right: 50px;
 }
 
+.select_container_genre {
+    display: flex;
+    align-items: center;
+    margin-right: 8px;
+}
+
 .formSelect {
     border-radius: 12px;
 }
@@ -21,7 +27,7 @@
     border-radius: 12px;
     border: 1px solid  #586E94;
     width: 121px;
-    margin-left: 8px
+    margin-left: 8px;
 }
 
 .menu_item {
@@ -35,7 +41,8 @@
 
 
 @media (max-width: 740px) {
-    .select_container {
-        margin: 0  9px 20px 0;
+    .select_container,
+    .select_container_genre {
+    margin: 0  9px 20px 0;
     }
   }

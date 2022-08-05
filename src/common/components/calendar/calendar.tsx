@@ -53,6 +53,13 @@ export const Calendar : FC<CalendarProps>= ({handleChange, dateValue}) => {
                   border: "1px solid" + colors.softBlue,
                   color: colors.softBlue,
                   width: "121px",
+                  cursor: 'pointer',
+                  "@media (max-width: 321px)" : {
+                    width: "100px",
+                  },
+                  "& .MuiInputBase-input": {
+                    padding: "11px 20px 6px 42px!important"
+                  }
                 },
                 "& .MuiFormLabel-root": {
                   color: colors.softBlue,

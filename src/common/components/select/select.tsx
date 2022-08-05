@@ -42,7 +42,7 @@ export const CustomSelect: FC<SelectProps> = ({
   };
 
   return (
-    <div className={styles.select_container}>
+    <div className={type === 'genre' ? styles.select_container_genre :  styles.select_container}>
       <Typography variant="body2">{sortTitle}</Typography>
       <CssTextField
         value={value}

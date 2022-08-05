@@ -73,7 +73,7 @@ export const theme = createTheme({
           },
         },
         input: {
-          padding: "11px 20px 6px 39px !important",
+          padding: "11px 20px 6px 22px !important",
         },
       },
     },

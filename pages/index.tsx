@@ -9,7 +9,7 @@ import styles from "../styles/index.module.css";
 import { config } from "../config/config";
 
 interface HomeProps {
-  data: any;
+  data: any; //Evolution : Creer un type d'object Movie avec les valeurs retourner par l'API
   dataGenre: any;
 }
 
@@ -25,10 +25,20 @@ const Home: FC<HomeProps> = ({ data, dataGenre }) => {
     { id: 2, name: "Z-A" },
   ];
 
+  const callApi = async (url: string) => {
+    try {
+      const res = await fetch(url);
+      const data = await res.json();
+      setMoviesToDisplay(data.results);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   const onPageChange = async (event, value, filter, typeFilter) => {
     setNumberPage(value);
     let url = null;
-    console.log(filter)
+    console.log(filter);
     //Je filtre ici les différents filtre et réitère l'appel par page
     if (filter === "genre")
       url = `${config.api_url}/discover/movie?api_key=${config.api_key}&page=${value}&with_genres=${typeFilter}`;
@@ -36,48 +46,28 @@ const Home: FC<HomeProps> = ({ data, dataGenre }) => {
     else {
       url = `${config.api_url}/discover/movie?api_key=${config.api_key}&page=${value}&year=${typeFilter}`;
     }
-
-    try {
-      const res = await fetch(
-        url
-          ? url
-          : `${config.api_url}/movie/popular?api_key=${config.api_key}&page=${value}`
-      );
-      const data = await res.json();
-      setMoviesToDisplay(data.results);
-    } catch (e) {
-      console.log(e);
-    }
+    callApi(
+      url
+        ? url
+        : `${config.api_url}/movie/popular?api_key=${config.api_key}&page=${value}`
+    );
   };
 
   const onSelectIdGenre = async (id: number, numberPage) => {
     setWichFilter("genre");
     setArgFilter(id);
-    try {
-      const res = await fetch(
-        `${config.api_url}/discover/movie?api_key=${config.api_key}&page=${numberPage}&with_genres=${id}`
-      );
-      const data = await res.json();
-      setMoviesToDisplay(data.results);
-    } catch (e) {
-      console.log(e);
-    }
+    callApi(
+      `${config.api_url}/discover/movie?api_key=${config.api_key}&page=${numberPage}&with_genres=${id}`
+    );
   };
 
   const onSelectYear = async (year: any, numberPage) => {
     setWichFilter("year");
     setArgFilter(year);
     setDateValue(year);
-    
-    try {
-      const res = await fetch(
-        `${config.api_url}/discover/movie?api_key=${config.api_key}&page=${numberPage}&year=${year}`
-      );
-      const data = await res.json();
-      setMoviesToDisplay(data.results);
-    } catch (e) {
-      console.log(e);
-    }
+    callApi(
+      `${config.api_url}/discover/movie?api_key=${config.api_key}&page=${numberPage}&year=${year}`
+    );
   };
 
   return (
